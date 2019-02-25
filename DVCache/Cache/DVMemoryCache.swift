@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 fileprivate class DVLinkedNode:Equatable {
     
     var prev:DVLinkedNode?
@@ -139,6 +140,43 @@ fileprivate class DVLinkedMap:NSObject {
 class DVMemoryCache:NSObject {
     
     var name:String?
+    let lock:NSLock
+    fileprivate let lru:DVLinkedMap
+    fileprivate let queue:DispatchQueue
+    fileprivate let countLimit:Int
+    fileprivate let costLimit:Int
+    fileprivate let ageLimit:Int
+    fileprivate let autoTrimInterval:Int
+    fileprivate let shouldRemoveAllObjectsOnMemoryWarning:Bool
+    fileprivate let shouldRemoveAllObjectsWhenEnteringBackground:Bool
+    
+    override init() {
+        lock = NSLock()
+        lru = DVLinkedMap()
+        queue = DispatchQueue.init(label: "com.whyiOS.cache.memory")
+        countLimit = Int.max
+        costLimit = Int.max
+        ageLimit = Int.max
+        autoTrimInterval = 5
+        shouldRemoveAllObjectsOnMemoryWarning = true
+        shouldRemoveAllObjectsWhenEnteringBackground = true
+        super.init()
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidReceiveMemoryWarningNotification), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        self.trimRecursively()
+    }
+// NSNotificationCenter
+    @objc func appDidReceiveMemoryWarningNotification() {
+        
+    }
+    
+    @objc func appDidEnterBackgroundNotification() {
+        
+    }
+    
+    fileprivate func trimRecursively() {
+        
+    }
     
     func containsObjectForKey(key:String)->Bool {
         return false
