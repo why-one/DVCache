@@ -9,10 +9,32 @@
 import UIKit
 
 class DVDiskCache {
-
-    init?(path:String) {
+    
+    static var globalInstancesLock:NSLock = NSLock()
+    static var globalInstances:[String:AnyObject?] = [:]
+    
+    fileprivate static func diskCacheGetGlobal(path:String?)->DVDiskCache? {
+        guard let localPath = path else { return nil }
+        globalInstancesLock.lock()
+        let cache = globalInstances[localPath]?.flatMap({$0}) as? DVDiskCache
+        globalInstancesLock.unlock()
+        return cache
+    }
+    
+    convenience init?() {
+        self.init(path: "", inlineThreshold: 0)
+    }
+    
+    convenience init?(path:String) {
+        self.init(path: path, inlineThreshold: 1024*20)
+    }
+    
+    init?(path:String,inlineThreshold:Int) {
+        let globalCache = DVDiskCache.diskCacheGetGlobal(path: path)
+        guard let cache = globalCache else { return nil }
         
     }
+    
     func containsObjectForKey(key:String)->Bool {
        return false
     }

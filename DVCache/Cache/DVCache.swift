@@ -34,7 +34,7 @@ class DVCache:CustomDebugStringConvertible {
         let localDiskCache = DVDiskCache.init(path: path)
         guard let diskCache = localDiskCache else { return nil }
         let memoryCache = DVMemoryCache.init()
-        memoryCache.name = path
+        memoryCache.name = (path as NSString).lastPathComponent
         
         self.name = path
         self.diskCache = diskCache

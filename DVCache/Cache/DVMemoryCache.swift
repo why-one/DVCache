@@ -402,12 +402,24 @@ class DVMemoryCache:NSObject {
     }
     
     func removeObjectForKey(key:String) {
-        
+        lock.lock()
+        var nodes = [DVLinkedNode?]()
+        let node = lru.removeFooter()
+        nodes.append(node)
+        let queue = lru.releaseOnMainThread ? DispatchQueue.main : DispatchQueue.global()
+        // 让nodes在这个线程释放
+        queue.async {
+            print(nodes.count)
+        }
     }
     
     func removeAllObjects() {
         lock.lock()
         lru.removeAll()
         lock.unlock()
+    }
+    
+    override var debugDescription: String {
+        return "Class:\(self),name:\(name ?? "")"
     }
 }

@@ -17,6 +17,7 @@
 		63AF67362223BFB70023819F /* DVCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF67352223BFB70023819F /* DVCache.swift */; };
 		63AF67382223C3D50023819F /* DVDiskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF67372223C3D50023819F /* DVDiskCache.swift */; };
 		63AF673A2223C43D0023819F /* DVMemoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF67392223C43D0023819F /* DVMemoryCache.swift */; };
+		63AF673C2224E4AB0023819F /* DVKVStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF673B2224E4AB0023819F /* DVKVStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		63AF67352223BFB70023819F /* DVCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVCache.swift; sourceTree = "<group>"; };
 		63AF67372223C3D50023819F /* DVDiskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVDiskCache.swift; sourceTree = "<group>"; };
 		63AF67392223C43D0023819F /* DVMemoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVMemoryCache.swift; sourceTree = "<group>"; };
+		63AF673B2224E4AB0023819F /* DVKVStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DVKVStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 				63AF67352223BFB70023819F /* DVCache.swift */,
 				63AF67392223C43D0023819F /* DVMemoryCache.swift */,
 				63AF67372223C3D50023819F /* DVDiskCache.swift */,
+				63AF673B2224E4AB0023819F /* DVKVStorage.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			files = (
 				63AF67092223BF160023819F /* ViewController.swift in Sources */,
 				63AF673A2223C43D0023819F /* DVMemoryCache.swift in Sources */,
+				63AF673C2224E4AB0023819F /* DVKVStorage.swift in Sources */,
 				63AF67382223C3D50023819F /* DVDiskCache.swift in Sources */,
 				63AF67072223BF160023819F /* AppDelegate.swift in Sources */,
 				63AF67362223BFB70023819F /* DVCache.swift in Sources */,
