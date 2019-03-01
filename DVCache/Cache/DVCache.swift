@@ -68,16 +68,16 @@ class DVCache:CustomDebugStringConvertible {
         return object
     }
     
-    func objectForKey(key:String,block:@escaping (_ key:String,_ object:AnyObject)->Void?) {
+    func objectForKey(key:String,block:@escaping (_ key:String,_ object:AnyObject?)->Void?) {
         let localObject = memoryCache.objectForKey(key: key)
         if let object = localObject {
             DispatchQueue.global().async {
                 block(key,object)
             }
         } else {
-            diskCache.objectForKey(key: key) { (key, objc) in
-                if !memoryCache.containsObjectForKey(key: key) {
-                    memoryCache.setObjectForKey(objc: objc, key: key)
+            diskCache.objectForKey(key: key) {[weak self] (key, objc) in
+                if !(self?.memoryCache.containsObjectForKey(key: key) ?? false) {
+                    self?.memoryCache.setObjectForKey(objc: objc, key: key)
                 }
                 block(key,objc)
             }
@@ -89,7 +89,7 @@ class DVCache:CustomDebugStringConvertible {
         diskCache.setObjectForKey(objc: object, key: key)
     }
     
-    func setObject(_ object:AnyObject,_ key:String,block:()->()?) {
+    func setObject(_ object:AnyObject,_ key:String,block:@escaping ()->()?) {
         memoryCache.setObjectForKey(objc: object, key: key)
         diskCache.setObjectForKey(objc: object, key: key, block: block)
     }
@@ -99,7 +99,7 @@ class DVCache:CustomDebugStringConvertible {
         diskCache.removeObjectForKey(key: key)
     }
     
-    func removeObjectForKey(key:String,block:(_ key:String)->()?) {
+    func removeObjectForKey(key:String,block:@escaping (_ key:String)->()?) {
          memoryCache.removeObjectForKey(key: key)
          diskCache.removeObjectForKey(key: key, block: block)
     }
@@ -109,12 +109,12 @@ class DVCache:CustomDebugStringConvertible {
         diskCache.removeAllObjects()
     }
     
-    func removeAllObjectsWithBlock(block:()->()?) {
+    func removeAllObjectsWithBlock(block:@escaping ()->()?) {
         memoryCache.removeAllObjects()
         diskCache.removeAllObjectsWithBlock(block: block)
     }
     
-    func removeAllObjectsWithProgressBlock(progress:(_ removedCount:Int,_ totalCount:Int)->()?,endBlock:(_ hasError:Bool)->()?) {
+    func removeAllObjectsWithProgressBlock(progress:@escaping (_ removedCount:Int,_ totalCount:Int)->()?,endBlock:@escaping (_ hasError:Bool)->()?) {
         memoryCache.removeAllObjects()
         diskCache.removeAllObjectsWithProgressBlock(progress: progress, endBlock: endBlock)
     }

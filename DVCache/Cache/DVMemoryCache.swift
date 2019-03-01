@@ -355,7 +355,7 @@ class DVMemoryCache:NSObject {
         return localNode.value
     }
     
-    func setObjectForKey(objc:AnyObject,key:String) {
+    func setObjectForKey(objc:AnyObject?,key:String) {
         setObjectForKey(objc: objc, key: key, cost: 0)
     }
     
