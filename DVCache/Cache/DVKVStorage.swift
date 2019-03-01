@@ -33,6 +33,8 @@ class DVKVStorage:NSObject {
     
     let type:DVKVStorageType
     
+    var logErrorLogsEnabled = true
+    
     init?(path:String,type:DVKVStorageType) {
         self.type = type
         super.init()
@@ -89,5 +91,9 @@ class DVKVStorage:NSObject {
     
     func getItemsCount() -> UInt {
         return 0
+    }
+    
+    func getItemsCost() -> UInt {
+        return 0 
     }
 }

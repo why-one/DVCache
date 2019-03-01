@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DVDiskCache {
+class DVDiskCache:CustomDebugStringConvertible {
     
     static var globalInstancesLock:NSLock = NSLock()
     static var globalInstances:[String:AnyObject?] = [:]
@@ -236,5 +236,36 @@ class DVDiskCache {
         return count
     }
     
+    func totalCountWithBlock(totalCount:UInt,block:@escaping (_ totalCount:UInt)->()) {
+        queue.async {[weak self] in
+            let totalCount = self?.totalCount() ?? 0
+            block(totalCount)
+        }
+    }
     
+    func totalCost() -> UInt {
+        lock.lock()
+        let count = kv.getItemsCost()
+        lock.unlock()
+        return count
+    }
+    
+    func totalCostWithBlock(totalCount:UInt,block:@escaping (_ totalCount:UInt)->()) {
+        queue.async {[weak self] in
+            let totalCount = self?.totalCost() ?? 0
+            block(totalCount)
+        }
+    }
+    
+    func setErrorLogsEnable(enable:Bool) {
+        kv.logErrorLogsEnabled = enable
+    }
+    
+    func errorLogsEnable() -> Bool {
+        return kv.logErrorLogsEnabled
+    }
+    
+    var debugDescription: String {
+        return "Class:\(self)"
+    }
 }
